@@ -1,0 +1,19 @@
+### 设定 Server 启动端口号
+server:
+  port: 13131
+spring:
+  ### 设定系统应用名
+  application:
+    name: itrip-register
+eureka:
+  ### 注册中心主机名
+  instance:
+    hostname: localhost
+  client:
+    ### 禁止本项目中的服务注册到注册中心
+    register-with-eureka: false
+    ### 整个项目只有一个注册中心，无需从其他注册中心发现服务
+    fetch-registry: false
+    ### 注册中心暴露的注册地址
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka

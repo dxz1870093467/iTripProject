@@ -1,0 +1,9 @@
+### 允许采用 bean 名字进行重写定义
+spring:
+  main:
+    allow-bean-definition-overriding: true
+### Eureka Client 配置信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:13131/eureka/
