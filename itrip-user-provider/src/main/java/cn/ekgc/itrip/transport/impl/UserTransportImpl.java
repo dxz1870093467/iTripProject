@@ -1,5 +1,6 @@
 package cn.ekgc.itrip.transport.impl;
 
+import cn.ekgc.itrip.pojo.entity.User;
 import cn.ekgc.itrip.service.UserService;
 import cn.ekgc.itrip.transport.user.UserTransport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,17 @@ public class UserTransportImpl implements UserTransport {
 	@Override
 	public boolean queryUserCodeIsCanUsed(@RequestParam String userCode) throws Exception {
 		return userService.queryUserCodeIsCanUsed(userCode);
+	}
+
+	/**
+	 * <b>使用邮箱注册用户</b>
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/doregister")
+	@Override
+	public boolean saveUser(User user) throws Exception {
+		return userService.saveUser(user);
 	}
 }

@@ -7,3 +7,17 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:13131/eureka/
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 8000
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 8000
+  ConnectTimeout: 8000

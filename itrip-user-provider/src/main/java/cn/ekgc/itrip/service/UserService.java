@@ -1,5 +1,7 @@
 package cn.ekgc.itrip.service;
 
+import cn.ekgc.itrip.pojo.entity.User;
+
 /**
  * <b>爱旅行-用户模块业务层接口</b>
  * @author Arthur
@@ -15,4 +17,12 @@ public interface UserService {
 	 * @throws Exception
 	 */
 	boolean queryUserCodeIsCanUsed(String userCode) throws Exception;
+
+	/**
+	 * <b>保存用户信息</b>
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	boolean saveUser(User user) throws Exception;
 }

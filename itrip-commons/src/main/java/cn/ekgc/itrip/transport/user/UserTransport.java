@@ -1,7 +1,10 @@
 package cn.ekgc.itrip.transport.user;
 
+import cn.ekgc.itrip.pojo.entity.User;
+import cn.ekgc.itrip.pojo.vo.UserVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,4 +25,13 @@ public interface UserTransport {
 	 */
 	@PostMapping("/ckusr")
 	boolean queryUserCodeIsCanUsed(@RequestParam String userCode) throws Exception;
+
+	/**
+	 * <b>使用邮箱注册用户</b>
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/doregister")
+	boolean saveUser(@RequestBody User user) throws Exception;
 }
