@@ -44,4 +44,17 @@ public class UserTransportImpl implements UserTransport {
 	public boolean saveUser(User user) throws Exception {
 		return userService.saveUser(user);
 	}
+
+	/**
+	 * <b>使用激活码激活用户</b>
+	 * @param userCode
+	 * @param code
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/activate")
+	@Override
+	public boolean activateUser(@RequestParam String userCode, @RequestParam String code) throws Exception {
+		return userService.activateUser(userCode, code);
+	}
 }

@@ -118,4 +118,44 @@ public class AuthController extends BaseController {
 			return ResultVO.failure("请填写正确的邮箱地址和登录密码");
 		}
 	}
+
+	/**
+	 * <b>邮箱注册用户激活</b>
+	 * @param user
+	 * @param code
+	 * @return
+	 * @throws Exception
+	 */
+	@PutMapping("/activate")
+	public ResultVO activateUserByEmail(String user, String code) throws Exception {
+		if (ValidateUtil.checkEmail(user) && code != null && !"".equals(code)) {
+			// 通过使用用户信息和激活码进行激活
+			if (userTransport.activateUser(user, code)) {
+				return ResultVO.success();
+			} else {
+				return ResultVO.failure("激活失败");
+			}
+		}
+		return ResultVO.failure("请填写正确的激活信息");
+	}
+
+	/**
+	 * <b>手机注册用户激活</b>
+	 * @param user
+	 * @param code
+	 * @return
+	 * @throws Exception
+	 */
+	@PutMapping("/validatephone")
+	public ResultVO activateUserByCellphone(String user, String code) throws Exception {
+		if (ValidateUtil.checkCellphone(user) && code != null && !"".equals(code)) {
+			// 通过使用用户信息和激活码进行激活
+			if (userTransport.activateUser(user, code)) {
+				return ResultVO.success();
+			} else {
+				return ResultVO.failure("激活失败");
+			}
+		}
+		return ResultVO.failure("请填写正确的激活信息");
+	}
 }

@@ -7,4 +7,4 @@ spring:
     name: itrip-user-provider
   ### 需要加载的配置文件
   profiles:
-    active: eureka-client, data
+    active: eureka-client, data, mail

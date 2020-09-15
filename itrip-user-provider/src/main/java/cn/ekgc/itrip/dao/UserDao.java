@@ -29,4 +29,12 @@ public interface UserDao {
 	 * @throws Exception
 	 */
 	Integer save(User entity) throws Exception;
+
+	/**
+	 * <b>修改信息</b>
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	Integer update(User user) throws Exception;
 }

@@ -1,0 +1,11 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: itrip-demo
+  ### Java Mail 设置
+  mail:
+    ### 邮件服务器地址
+    host: smtp.163.com
+    username: 15591339501@163.com
+    password: CSSOHLITCGUPYBUE

@@ -34,4 +34,14 @@ public interface UserTransport {
 	 */
 	@PostMapping("/doregister")
 	boolean saveUser(@RequestBody User user) throws Exception;
+
+	/**
+	 * <b>使用激活码激活用户</b>
+	 * @param user
+	 * @param code
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/activate")
+	boolean activateUser(@RequestParam String userCode, @RequestParam String code) throws Exception;
 }
