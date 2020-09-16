@@ -39,7 +39,7 @@ public class SmsUtils {
 		sdk.setBodyType(BodyType.Type_JSON);
 		String to = cellphone;
 		String templateId= ConstantUtils.CLOOPEN_TEMPLATE_ID;
-		String[] datas = {activationCode, ConstantUtils.MAIL_EXPIRE, "变量3"};
+		String[] datas = {activationCode, String.valueOf(ConstantUtils.MAIL_EXPIRE), "变量3"};
 		HashMap<String, Object> result = sdk.sendTemplateSMS(to, templateId, datas);
 		if("000000".equals(result.get("statusCode"))){
 			//正常返回输出data包体信息（map）

@@ -1,20 +1,20 @@
 package cn.ekgc.itrip.service.impl;
 
+import cn.ekgc.itrip.base.pojo.vo.ResultVO;
 import cn.ekgc.itrip.dao.UserDao;
 import cn.ekgc.itrip.pojo.entity.User;
 import cn.ekgc.itrip.pojo.enums.ActivatedEnum;
 import cn.ekgc.itrip.pojo.enums.UserTypeEnum;
 import cn.ekgc.itrip.service.UserService;
-import cn.ekgc.itrip.util.ActivationCodeUtil;
-import cn.ekgc.itrip.util.ConstantUtils;
-import cn.ekgc.itrip.util.EmailUtils;
-import cn.ekgc.itrip.util.SmsUtils;
+import cn.ekgc.itrip.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 	@Autowired
-	private StringRedisTemplate redisTemplate;
+	private RedisUtils redisUtils;
 	@Autowired
 	private EmailUtils emailUtils;
 	@Autowired
@@ -90,9 +90,7 @@ public class UserServiceImpl implements UserService {
 				smsUtils.sendActivationCodeByCloopen(user.getUserCode(), activationCode);
 			}
 			// 将激活码存储于 Redis 中，使用 userCode 作为 key
-			redisTemplate.opsForValue().set(user.getUserCode(), activationCode);
-			// 设定过期时间
-			redisTemplate.expire(user.getUserCode(), 5, TimeUnit.MINUTES);
+			redisUtils.saveToRedis(user.getUserCode(), activationCode, ConstantUtils.MAIL_EXPIRE);
 			System.out.println(activationCode);
 			// 将激活码发送到邮箱
 			return true;
@@ -110,7 +108,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean activateUser(String userCode, String code) throws Exception {
 		// 通过使用 userCode 作为 key 从 Redis 中查询用户信息
-		String activationCode = redisTemplate.opsForValue().get(userCode);
+		String activationCode = (String) redisUtils.getFromRedis(userCode, String.class);
 		if (activationCode != null) {
 			// 找到对应的激活码，和用户所提交信息进行比较
 			if (activationCode.equals(code)) {
@@ -126,5 +124,63 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * <b>使用 token 查找当前登录用户</b>
+	 * @param token
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public User getUserByToken(String token) throws Exception {
+		// 通过 Redis 进行查询
+		User user = (User) redisUtils.getFromRedis(token, User.class);
+		return user;
+	}
+
+	/**
+	 * <b>使用 userCode 和 password 进行登录</b>
+	 * @param userCode
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public ResultVO loginUser(String userCode, String password) throws Exception {
+		// 创建查询对象
+		User query = new User();
+		query.setUserCode(userCode);
+		// 进行列表查询
+		List<User> list = userDao.findListByQuery(query);
+		// 判断该用户信息是否存在
+		if (list != null && !list.isEmpty()) {
+			User user = list.get(0);
+			// 该用户存在，校验该用户是否激活
+			if (user.getActivated().equals(ActivatedEnum.ACTIVATED_TRUE.getCode())) {
+				// 该用户已激活，对于用户进行密码加密
+				password = MD5Util.encrypt(password);
+				if (user.getUserPassword().equals(password)) {
+					// 设定该用户登录有效期
+					Map<String, Object> resultMap = new HashMap<String, Object>();
+					// 设置 token，使用 MD5 对用户的 userCode 进行加密，并且全部变为大写
+					String token = MD5Util.encrypt(user.getUserCode()).toUpperCase();
+					// 将 token 作为 key 存储于 Redis
+					redisUtils.saveToRedis(token, user, ConstantUtils.LOGIN_EXPIRE);
+					resultMap.put("token", token);
+					// 设置过期时间
+					resultMap.put("expTime", ConstantUtils.LOGIN_EXPIRE);
+					return ResultVO.success(resultMap);
+				} else {
+					return ResultVO.failure("登录密码错误");
+				}
+			} else {
+				// 该用户为激活
+				return ResultVO.failure("该用户未激活");
+			}
+		} else {
+			// 用户不存在
+			return ResultVO.failure("该用户未进行注册");
+		}
 	}
 }

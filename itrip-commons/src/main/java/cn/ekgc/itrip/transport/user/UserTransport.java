@@ -1,5 +1,6 @@
 package cn.ekgc.itrip.transport.user;
 
+import cn.ekgc.itrip.base.pojo.vo.ResultVO;
 import cn.ekgc.itrip.pojo.entity.User;
 import cn.ekgc.itrip.pojo.vo.UserVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -44,4 +45,23 @@ public interface UserTransport {
 	 */
 	@PostMapping("/activate")
 	boolean activateUser(@RequestParam String userCode, @RequestParam String code) throws Exception;
+
+	/**
+	 * <b>使用 token 查找当前登录用户</b>
+	 * @param token
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/token")
+	User getUserByToken(@RequestParam String token) throws Exception;
+
+	/**
+	 * <b>使用 userCode 和 password 进行登录</b>
+	 * @param userCode
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/login")
+	ResultVO loginUser(@RequestParam String userCode, @RequestParam String password) throws Exception;
 }

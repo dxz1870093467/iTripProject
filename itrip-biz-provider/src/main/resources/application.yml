@@ -1,10 +1,10 @@
 ### 启动端口号
 server:
-  port: 19999
+  port: 29999
 ### 设定应用名
 spring:
   application:
-    name: itrip-user-provider
+    name: itrip-biz-provider
   ### 需要加载的配置文件
   profiles:
     active: eureka-client, data, mail

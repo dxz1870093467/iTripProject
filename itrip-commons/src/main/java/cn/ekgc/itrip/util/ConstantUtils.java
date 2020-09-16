@@ -19,6 +19,11 @@ public class ConstantUtils {
 	}
 
 	/**
+	 * <b>登录过期时间</b>
+	 */
+	public static final Long LOGIN_EXPIRE = Long.parseLong(props.getProperty("login.expire"));
+
+	/**
 	 * <b>邮件信息：发送人</b>
 	 */
 	public static final String MAIL_FROM = props.getProperty("mail.from");
@@ -26,7 +31,7 @@ public class ConstantUtils {
 	/**
 	 * <b>邮件信息：过期时间</b>
 	 */
-	public static final String MAIL_EXPIRE = props.getProperty("mail.expire");
+	public static final Long MAIL_EXPIRE = Long.parseLong(props.getProperty("mail.expire"));
 
 	/**
 	 * <b>容联云配置信息</b>

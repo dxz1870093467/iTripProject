@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <b>爱旅行-用户认证功能控制器</b>
@@ -157,5 +159,23 @@ public class AuthController extends BaseController {
 			}
 		}
 		return ResultVO.failure("请填写正确的激活信息");
+	}
+
+	/**
+	 * <b>根据用户名、密码进行统一认证</b>
+	 * @param name
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/dologin")
+	public ResultVO loginUser(String name, String password) throws Exception {
+		// 判断用户所提交的 name 和 password 是否有效
+		if (name != null && !"".equals(name.trim()) && password != null && !"".equals(password.trim())) {
+			// 使用 name 查询用户信息
+			ResultVO resultVO = userTransport.loginUser(name, password);
+			return resultVO;
+		}
+		return ResultVO.failure("请填写有效的的登录信息");
 	}
 }
