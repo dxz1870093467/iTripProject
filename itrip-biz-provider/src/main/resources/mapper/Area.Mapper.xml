@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ekgc.itrip.dao.AreaDao">
+	<select id="findListByQuery" parameterType="Area" resultMap="areaMap">
+		select
+			a.id,
+			a.name,
+			a.areaNo,
+			a.parent,
+			p.name parentName,
+			a.isActivated,
+			a.isTradingArea,
+			a.isHot,
+			a.level,
+			a.isChina,
+			a.pinyin,
+			a.creationDate,
+			a.createdBy,
+			a.modifyDate,
+			a.modifiedBy
+		from
+			itrip_area_dic a left join itrip_area_dic p on a.parent=p.id
+		<where>
+			<trim suffixOverrides="and">
+				<if test="id != null">a.id=#{id} and </if>
+				<if test="name != null">a.name like concat('%', #{name}, '%') and </if>
+				<if test="areaNo != null">a.areaNo=#{areaNo} and </if>
+				<if test="isActivated != null">a.isActivated=#{isActivated} and </if>
+				<if test="isTradingArea != null">a.isTradingArea=#{isTradingArea} and </if>
+				<if test="isHot != null">a.isHot=#{isHot} and </if>
+				<if test="level != null">a.level=#{level} and </if>
+				<if test="isChina != null">a.isChina=#{isChina} and </if>
+			</trim>
+		</where>
+	</select>
+	
+	<resultMap id="areaMap" type="Area">
+		<id property="id" javaType="java.lang.Long" column="id"/>
+		<result property="name" javaType="java.lang.String" column="name"/>
+		<result property="areaNo" javaType="java.lang.String" column="areaNo"/>
+		<result property="isActivated" javaType="java.lang.Integer" column="isActivated"/>
+		<result property="isTradingArea" javaType="java.lang.Integer" column="isTradingArea"/>
+		<result property="isHot" javaType="java.lang.Integer" column="isHot"/>
+		<result property="level" javaType="java.lang.Integer" column="level"/>
+		<result property="isChina" javaType="java.lang.Integer" column="isChina"/>
+		<result property="pinyin" javaType="java.lang.String" column="pinyin"/>
+		<result property="creationDate" javaType="java.util.Date" column="creationDate"/>
+		<result property="createdBy" javaType="java.lang.Long" column="createdBy"/>
+		<result property="modifyDate" javaType="java.util.Date" column="modifyDate"/>
+		<result property="modifiedBy" javaType="java.lang.Long" column="modifiedBy"/>
+		<result property="activated" javaType="java.lang.Integer" column="activated"/>
+		<association property="parent" javaType="Area">
+			<id property="id" javaType="java.lang.Long" column="parent"/>
+			<result property="name" javaType="java.lang.String" column="parentName"/>
+		</association>
+	</resultMap>
+</mapper>

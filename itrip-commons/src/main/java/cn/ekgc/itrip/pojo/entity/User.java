@@ -1,5 +1,7 @@
 package cn.ekgc.itrip.pojo.entity;
 
+import cn.ekgc.itrip.base.entity.BaseEntity;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,8 +11,8 @@ import java.util.Date;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class User implements Serializable {
-	private static final long serialVersionUID = -8964085806402128112L;
+public class User extends BaseEntity implements Serializable {
+	private static final long serialVersionUID = -2388047272567548206L;
 	private Long id;                        // 主键
 	private String userCode;                // 若是第三方登录，系统将自动生成唯一账号；自注册用户则为邮箱或者手机号
 	private String userPassword;            // 若是第三方登录，系统将自动生成唯一密码；自注册用户则为自定义密码
@@ -21,10 +23,6 @@ public class User implements Serializable {
 	private String QQ;                      // qq账号
 	private String weibo;                   // 微博账号
 	private String baidu;                   // 百度账号
-	private Date creationDate;
-	private Long createdBy;
-	private Date modifyDate;
-	private Long modifiedBy;
 	private Integer activated;              // 是否激活,(0 false，1 true,默认是0)
 
 	public Long getId() {
@@ -105,38 +103,6 @@ public class User implements Serializable {
 
 	public void setBaidu(String baidu) {
 		this.baidu = baidu;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getModifyDate() {
-		return modifyDate;
-	}
-
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
-	}
-
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
 	}
 
 	public Integer getActivated() {
