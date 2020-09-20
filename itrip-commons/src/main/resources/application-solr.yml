@@ -1,0 +1,5 @@
+spring:
+  data:
+    ### 设定所使用 solr 查询库所在位置
+    solr:
+      host: http://localhost:8080/solr/hotel

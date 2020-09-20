@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-								http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                                http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>itrip-commons</artifactId>
+	<artifactId>itrip-search-consumer</artifactId>
 	<packaging>jar</packaging>
 
 	<!-- 配置使用 itrip-parent 作为项目父级依赖关系 [BEGIN] -->
@@ -19,46 +19,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<java-sms-sdk.version>1.0.3</java-sms-sdk.version>
 	</properties>
 
 	<dependencies>
-		<!-- 配置 Eureka Client 的依赖关系 [BEGIN] -->
+		<!-- 配置 itrip-data-commons 依赖关系 [BEGIN] -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<groupId>cn.ekgc.itrip</groupId>
+			<artifactId>itrip-commons</artifactId>
+			<version>${parent.version}</version>
 		</dependency>
-		<!-- 配置 Eureka Client 的依赖关系 [END] -->
-
-		<!-- 配置 OpenFeign 依赖关系 [BEGIN] -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
-		<!-- 配置 OpenFeign 依赖关系 [END] -->
-
-		<!-- 配置 Spring Boot Starter Mail 依赖关系 [BEGIN] -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-		<!-- 配置 Spring Boot Starter Mail 依赖关系 [END] -->
-
-		<!-- 配置容联云 SDK 依赖关系 [BEGIN] -->
-		<dependency>
-			<groupId>com.cloopen</groupId>
-			<artifactId>java-sms-sdk</artifactId>
-			<version>${java-sms-sdk.version}</version>
-		</dependency>
-		<!-- 配置容联云 SDK 依赖关系 [END] -->
-
-		<!-- 配置 Spring Boot Starter Solr 依赖关系 [BEGIN] -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-solr</artifactId>
-		</dependency>
-		<!-- 配置 Spring Boot Starter Solr 依赖关系 [END] -->
-
+		<!-- 配置 itrip-data-commons 依赖关系 [END] -->
 
 		<dependency>
 			<groupId>junit</groupId>

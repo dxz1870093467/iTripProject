@@ -1,0 +1,9 @@
+### 项目启动端口号
+server:
+  port: 33333
+### 项目应用名
+spring:
+  application:
+    name: itrip-search-provider
+  profiles:
+    active: eureka-client, mail, solr
