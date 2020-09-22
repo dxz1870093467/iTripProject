@@ -23,6 +23,7 @@ public class Area extends BaseEntity implements Serializable {
 	private Integer level;
 	private Integer isChina;
 	private String pinyin;
+	private Long hotelId;
 
 	public Long getId() {
 		return id;
@@ -102,5 +103,13 @@ public class Area extends BaseEntity implements Serializable {
 
 	public void setPinyin(String pinyin) {
 		this.pinyin = pinyin;
+	}
+
+	public Long getHotelId() {
+		return hotelId;
+	}
+
+	public void setHotelId(Long hotelId) {
+		this.hotelId = hotelId;
 	}
 }

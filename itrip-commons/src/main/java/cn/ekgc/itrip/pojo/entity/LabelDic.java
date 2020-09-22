@@ -19,6 +19,7 @@ public class LabelDic extends BaseEntity implements Serializable {
 	private String description;
 	private LabelDic parent;
 	private String pic;
+	private Long hotelId;
 
 	public Long getId() {
 		return id;
@@ -66,5 +67,13 @@ public class LabelDic extends BaseEntity implements Serializable {
 
 	public void setPic(String pic) {
 		this.pic = pic;
+	}
+
+	public Long getHotelId() {
+		return hotelId;
+	}
+
+	public void setHotelId(Long hotelId) {
+		this.hotelId = hotelId;
 	}
 }

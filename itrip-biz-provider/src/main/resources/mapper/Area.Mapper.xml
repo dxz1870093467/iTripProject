@@ -21,6 +21,7 @@
 			a.modifiedBy
 		from
 			itrip_area_dic a left join itrip_area_dic p on a.parent=p.id
+			left join itrip_hotel_trading_area ihta on a.id=ihta.areaId
 		<where>
 			<trim suffixOverrides="and">
 				<if test="id != null">a.id=#{id} and </if>
@@ -31,6 +32,7 @@
 				<if test="isHot != null">a.isHot=#{isHot} and </if>
 				<if test="level != null">a.level=#{level} and </if>
 				<if test="isChina != null">a.isChina=#{isChina} and </if>
+				<if test="hotelId != null">ihta.hotelId=#{hotelId} and </if>
 			</trim>
 		</where>
 	</select>

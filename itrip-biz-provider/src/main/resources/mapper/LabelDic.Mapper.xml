@@ -4,22 +4,23 @@
 <mapper namespace="cn.ekgc.itrip.dao.LabelDicDao">
 	<select id="findListByQuery" parameterType="LabelDic" resultMap="labelDicMap">
 		select
-			id,
-			name,
-			value,
-			description,
-			pic,
-			creationDate,
-			createdBy,
-			modifyDate,
-			modifiedBy
+			ild.id,
+			ild.name,
+			ild.value,
+			ild.description,
+			ild.pic,
+			ild.creationDate,
+			ild.createdBy,
+			ild.modifyDate,
+			ild.modifiedBy
 		from
-			itrip_label_dic
+			itrip_label_dic ild left join itrip_hotel_feature ihf on ild.id=ihf.featureId
 		<where>
 			<trim suffixOverrides="and">
-				<if test="id != null">id=#{id} and </if>
-				<if test="name != null">name like concat('%', #{name}, '%') and </if>
-				<if test="parent != null">parentId=#{parent.id} and </if>
+				<if test="id != null">ild.id=#{id} and </if>
+				<if test="name != null">ild.name like concat('%', #{name}, '%') and </if>
+				<if test="parent != null">ild.parentId=#{parent.id} and </if>
+				<if test="hotelId != null">ihf.hotelId=#{hotelId} and </if>
 			</trim>
 		</where>
 	</select>
